@@ -249,10 +249,24 @@ def grid(cards):
     return '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' + "".join(cards) + '</div>'
 
 _cur_name, _cur_years = CURRENT_PRIEST
+CURRENT_PRIEST_DETAILS = [
+    ("Feast", "January 02"),
+    ("Native Parish", "Kizhakkambalam &ndash; St. Antony Forane Church"),
+    ("Ordination", "02 January 1990"),
+    ("Email", '<a href="mailto:bpsserry@gmail.com" class="hover:text-primary transition-colors">bpsserry@gmail.com</a>'),
+]
+_cur_rows = "".join(
+    f'<div class="py-3 border-b border-border last:border-0"><p class="font-body text-xs uppercase tracking-wider text-muted-foreground">{k}</p>'
+    f'<p class="font-body text-sm font-semibold text-foreground">{v}</p></div>'
+    for k, v in CURRENT_PRIEST_DETAILS
+)
 current_html = (
-    '<div class="mx-auto" style="max-width: 300px;">'
-    + person_card(_cur_name, f'<div class="{YEARS_BADGE}">{_cur_years}</div>')
-    + '</div>'
+    '<div class="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden shadow-lg">'
+    '<div class="grid grid-cols-1 md:grid-cols-2 items-center">'
+    f'<div style="aspect-ratio: 4 / 5;"><img src="assets/images/clergy/fr-basil-punchaputhussery.png" alt="{_cur_name}" class="w-full h-full object-cover"></div>'
+    f'<div class="p-8"><h3 class="font-heading text-2xl font-bold text-foreground mb-3">{_cur_name}</h3>'
+    f'<div class="{YEARS_BADGE} mb-4">{_cur_years}</div>{_cur_rows}</div>'
+    '</div></div>'
 )
 
 former_html = grid(person_card(n, f'<div class="{YEARS_BADGE}">{y}</div>') for n, y in FORMER_PRIESTS)
