@@ -6,6 +6,7 @@ A static HTML/CSS clone of [stantonyschurchayroor.base44.app](https://stantonysc
 
 - `index.html` — Home
 - `history.html` — Our History
+- `clergy.html` — Priests & Sisters (photo placeholders marked `data-photo-placeholder`)
 - `parish-life.html` — Parish Life
 - `jubilee.html` — Centenary Jubilee
 - `devotion.html` — Devotion & Liturgy
