@@ -286,6 +286,15 @@ PRIEST_INFO = {
             ("Ordination", "18 December 1968"),
         ],
     },
+    "Rev. Fr. George Kachappilly": {
+        "photo": "assets/images/clergy/fr-george-kachappilly.png",
+        "details": [
+            ("Feast", "April 24"),
+            ("Native Parish", "Mattoor &ndash; St. Antony Church"),
+            ("Ordination", "28 December 1992"),
+            ("Email", email_link("frgeorgekachappilly@gmail.com")),
+        ],
+    },
 }
 
 CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down details-chevron w-4 h-4"><path d="m6 9 6 6 6-6"></path></svg>'
