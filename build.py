@@ -251,36 +251,61 @@ def people_section(bg, title, subtitle, cards_html):
 def grid(cards):
     return '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' + "".join(cards) + '</div>'
 
-_cur_name, _cur_years = CURRENT_PRIEST
-CURRENT_PRIEST_DETAILS = [
-    ("Feast", "January 02"),
-    ("Native Parish", "Kizhakkambalam &ndash; St. Antony Forane Church"),
-    ("Ordination", "02 January 1990"),
-    ("Email", '<a href="mailto:bpsserry@gmail.com" class="hover:text-primary transition-colors">bpsserry@gmail.com</a>'),
-]
-_cur_rows = "".join(
-    f'<div class="py-3 border-b border-border last:border-0"><p class="font-body text-xs uppercase tracking-wider text-muted-foreground">{k}</p>'
-    f'<p class="font-body text-sm font-semibold text-foreground">{v}</p></div>'
-    for k, v in CURRENT_PRIEST_DETAILS
-)
-CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down details-chevron w-4 h-4"><path d="m6 9 6 6 6-6"></path></svg>'
-_cur_details = (
-    '<details class="border-t border-border text-left">'
-    f'<summary class="flex items-center justify-center gap-2 px-4 py-3 cursor-pointer select-none font-body text-sm font-semibold text-primary">More details {CHEVRON_DOWN}</summary>'
-    f'<div class="px-4 pb-3">{_cur_rows}</div></details>'
-)
-current_html = (
-    '<div class="mx-auto" style="max-width: 300px;">'
-    + person_card(
-        _cur_name,
-        f'<div class="{YEARS_BADGE}">{_cur_years}</div>',
-        photo="assets/images/clergy/fr-basil-punchaputhussery.png",
-        details_html=_cur_details,
-    )
-    + '</div>'
-)
+def email_link(addr):
+    return f'<a href="mailto:{addr}" class="hover:text-primary transition-colors">{addr}</a>'
 
-former_html = grid(person_card(n, f'<div class="{YEARS_BADGE}">{y}</div>') for n, y in FORMER_PRIESTS)
+PRIEST_INFO = {
+    "Rev. Fr. Basil Punchaputhussery": {
+        "photo": "assets/images/clergy/fr-basil-punchaputhussery.png",
+        "details": [
+            ("Feast", "January 02"),
+            ("Native Parish", "Kizhakkambalam &ndash; St. Antony Forane Church"),
+            ("Ordination", "02 January 1990"),
+            ("Email", email_link("bpsserry@gmail.com")),
+        ],
+    },
+    "Rev. Fr. Alex Kattezhath": {
+        "photo": "assets/images/clergy/fr-alex-kattezhath.png",
+        "details": [
+            ("Native Parish", "Kudavechoor &ndash; St. Mary's Church"),
+            ("Ordination", "21 March 1980"),
+            ("Email", email_link("alexkattezhathu@gmail.com")),
+        ],
+    },
+    "Rev. Fr. James Alukkal": {
+        "details": [
+            ("Feast", "July 25"),
+            ("Native Parish", "Kalady &ndash; St. George Church"),
+            ("Ordination", "18 December 1972"),
+        ],
+    },
+}
+
+CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down details-chevron w-4 h-4"><path d="m6 9 6 6 6-6"></path></svg>'
+
+def details_dropdown(rows):
+    items = "".join(
+        f'<div class="py-3 border-b border-border last:border-0"><p class="font-body text-xs uppercase tracking-wider text-muted-foreground">{k}</p>'
+        f'<p class="font-body text-sm font-semibold text-foreground">{v}</p></div>'
+        for k, v in rows
+    )
+    return (
+        '<details class="border-t border-border text-left">'
+        f'<summary class="flex items-center justify-center gap-2 px-4 py-3 cursor-pointer select-none font-body text-sm font-semibold text-primary">More details {CHEVRON_DOWN}</summary>'
+        f'<div class="px-4 pb-3">{items}</div></details>'
+    )
+
+def priest_card(name, years):
+    info = PRIEST_INFO.get(name, {})
+    return person_card(
+        name,
+        f'<div class="{YEARS_BADGE}">{years}</div>',
+        photo=info.get("photo"),
+        details_html=details_dropdown(info["details"]) if "details" in info else "",
+    )
+
+current_html = '<div class="mx-auto" style="max-width: 300px;">' + priest_card(*CURRENT_PRIEST) + '</div>'
+former_html = grid(priest_card(n, y) for n, y in FORMER_PRIESTS)
 vocations_html = grid(person_card(n, f'<p class="font-body text-xs text-muted-foreground">{r}</p>') for n, r in PARISH_VOCATIONS)
 sisters_html = grid(
     person_card(
