@@ -1,6 +1,4 @@
-# St. Antony's Church Ayroor — Website Clone
-
-A static HTML/CSS clone of [stantonyschurchayroor.base44.app](https://stantonyschurchayroor.base44.app), preserving the original design, colors, and fonts (Playfair Display, Inter, Noto Sans Malayalam).
+# St. Antony's Church Ayroor — Website
 
 ## Structure
 
