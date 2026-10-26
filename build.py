@@ -225,17 +225,20 @@ assert len(SISTERS) == 29
 
 USER_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-12 h-12"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
 
-def photo_placeholder():
+def photo_placeholder(src=None, alt=""):
+    if src:
+        return f'<div style="aspect-ratio: 4 / 5;"><img src="{src}" alt="{alt}" class="w-full h-full object-cover"></div>'
     return f'<div class="bg-muted flex items-center justify-center text-muted-foreground" data-photo-placeholder style="aspect-ratio: 4 / 5;">{USER_ICON}</div>'
 
 YEARS_BADGE = "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 font-body font-semibold"
 ORDER_BADGE = "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-body font-semibold bg-primary/10 text-primary"
 
-def person_card(name, extra_html):
+def person_card(name, extra_html, photo=None, details_html=""):
     return (
         '<div class="rounded-2xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-lg transition-shadow text-center h-full">'
-        f'{photo_placeholder()}'
-        f'<div class="p-4"><h3 class="font-heading text-base font-bold text-foreground mb-2">{name}</h3>{extra_html}</div></div>'
+        f'{photo_placeholder(photo, name)}'
+        f'<div class="p-4"><h3 class="font-heading text-base font-bold text-foreground mb-2">{name}</h3>{extra_html}</div>'
+        f'{details_html}</div>'
     )
 
 def people_section(bg, title, subtitle, cards_html):
@@ -260,13 +263,21 @@ _cur_rows = "".join(
     f'<p class="font-body text-sm font-semibold text-foreground">{v}</p></div>'
     for k, v in CURRENT_PRIEST_DETAILS
 )
+CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down details-chevron w-4 h-4"><path d="m6 9 6 6 6-6"></path></svg>'
+_cur_details = (
+    '<details class="border-t border-border text-left">'
+    f'<summary class="flex items-center justify-center gap-2 px-4 py-3 cursor-pointer select-none font-body text-sm font-semibold text-primary">More details {CHEVRON_DOWN}</summary>'
+    f'<div class="px-4 pb-3">{_cur_rows}</div></details>'
+)
 current_html = (
-    '<div class="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden shadow-lg">'
-    '<div class="grid grid-cols-1 md:grid-cols-2 items-center">'
-    f'<div style="aspect-ratio: 4 / 5;"><img src="assets/images/clergy/fr-basil-punchaputhussery.png" alt="{_cur_name}" class="w-full h-full object-cover"></div>'
-    f'<div class="p-8"><h3 class="font-heading text-2xl font-bold text-foreground mb-3">{_cur_name}</h3>'
-    f'<div class="{YEARS_BADGE} mb-4">{_cur_years}</div>{_cur_rows}</div>'
-    '</div></div>'
+    '<div class="mx-auto" style="max-width: 300px;">'
+    + person_card(
+        _cur_name,
+        f'<div class="{YEARS_BADGE}">{_cur_years}</div>',
+        photo="assets/images/clergy/fr-basil-punchaputhussery.png",
+        details_html=_cur_details,
+    )
+    + '</div>'
 )
 
 former_html = grid(person_card(n, f'<div class="{YEARS_BADGE}">{y}</div>') for n, y in FORMER_PRIESTS)
