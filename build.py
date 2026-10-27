@@ -295,6 +295,15 @@ PRIEST_INFO = {
             ("Email", email_link("frgeorgekachappilly@gmail.com")),
         ],
     },
+    "Rev. Fr. Jacob Manjaly": {
+        "photo": "assets/images/clergy/fr-jacob-manjaly.png",
+        "details": [
+            ("Feast", "July 25"),
+            ("Native Parish", "Meloor &ndash; St. Joseph Church"),
+            ("Ordination", "07 February 1996"),
+            ("Email", email_link("fr.jacobmanjaly@gmail.com")),
+        ],
+    },
 }
 
 CHEVRON_DOWN = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down details-chevron w-4 h-4"><path d="m6 9 6 6 6-6"></path></svg>'
