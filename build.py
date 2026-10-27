@@ -305,6 +305,7 @@ PRIEST_INFO = {
         ],
     },
     "Rev. Fr. Joseph Odanatt": {
+        "photo": "assets/images/clergy/fr-joseph-odanatt.png",
         "details": [
             ("Feast", "March 19"),
             ("Native Parish", "Palluruthy &ndash; St. Mary's Church"),
